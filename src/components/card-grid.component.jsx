@@ -1,11 +1,23 @@
 import styled from "styled-components";
 import Card from "./card.component";
 
-const CardGrid = ({ setTurnCount, imageCollection }) => {
+const CardGrid = ({ setTurnCount, imageCollection, setSelected, selected }) => {
   return (
     <Container>
       {imageCollection.map(tile => (
-        <Card setTurnCount={setTurnCount} tile={tile} />
+        <Card
+          setTurnCount={setTurnCount}
+          tile={tile}
+          key={tile.id}
+          setSelected={setSelected}
+          ShowBackSide={selected.current.id === tile.id}
+          cancelOutThisCard={
+            selected.current.url.length > 0 &&
+            selected.last.url.length > 0 &&
+            selected.last.url === selected.current.url &&
+            selected.current.id === tile.id
+          }
+        />
       ))}
     </Container>
   );
@@ -16,7 +28,6 @@ export default CardGrid;
 const Container = styled.div`
   width: 50%;
   margin: auto;
-  /* border: 1px solid yellow; */
   height: 100%;
 
   display: grid;

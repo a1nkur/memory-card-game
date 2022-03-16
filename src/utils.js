@@ -19,14 +19,14 @@ export const shuffler = (array, setImageCollection) => {
 
   let randomNumberBetween0And11 = Math.floor(Math.random() * 12);
 
-  for (let x = 0; x < array.length; x++) {
+  for (let currentIndex = 0; currentIndex < array.length; currentIndex++) {
     while (used.includes(randomNumberBetween0And11)) {
       randomNumberBetween0And11 = Math.floor(Math.random() * 12);
     }
 
     used.push(randomNumberBetween0And11);
 
-    shuffled.splice(randomNumberBetween0And11, 0, array[x]);
+    shuffled.splice(randomNumberBetween0And11, 0, array[currentIndex]);
   }
 
   setImageCollection(shuffled);

@@ -1,25 +1,44 @@
-import { useState } from "react";
 import styled from "styled-components";
 
-const Card = ({ setTurnCount, tile }) => {
-  const [showBackSide, setShowBackSide] = useState(true);
-
+const Card = ({ setTurnCount, tile, setSelected, cancelOutThisCard, ShowBackSide }) => {
   const handleFlip = () => {
-    setShowBackSide(prevState => !prevState);
     setTurnCount(prevState => prevState + 1);
+
+    setSelected(prevState => ({
+      ...prevState,
+      last: prevState.current,
+      current: { url: tile.backSideURL, id: tile.id },
+    }));
   };
 
   return (
-    <Container isBackSideShowing={showBackSide}>
-      <div className="inner" onClick={handleFlip}>
-        <div className="card-front">
-          <img src={tile.frontSideURL} alt="front-side" />
-        </div>
-        <div className="card-back">
-          <img src={tile.backSideURL} alt="back-side" />
-        </div>
-      </div>
-    </Container>
+    <>
+      {!cancelOutThisCard && (
+        <Container ShowBackSide={ShowBackSide} showFrontSide={cancelOutThisCard}>
+          <div className="inner" onClick={handleFlip}>
+            <div className="card-front">
+              <img src={tile.frontSideURL} alt="front-side" />
+            </div>
+            <div className="card-back">
+              <img src={tile.backSideURL} alt="back-side" />
+            </div>
+          </div>
+        </Container>
+      )}
+
+      {cancelOutThisCard && (
+        <Container>
+          <div className="inner">
+            <div className="card-front">
+              <img src={tile.frontSideURL} alt="front-side" />
+            </div>
+            <div className="card-back">
+              <img src={tile.backSideURL} alt="back-side" />
+            </div>
+          </div>
+        </Container>
+      )}
+    </>
   );
 };
 
@@ -31,7 +50,7 @@ const Container = styled.div`
   cursor: pointer;
   background-color: transparent;
   perspective: 1000px;
-  transform: ${props => (props.isBackSideShowing ? "rotateY(180deg)" : "none")};
+  transform: ${props => (props.ShowBackSide ? "rotateY(180deg)" : "none")};
 
   .inner {
     position: relative;
@@ -40,7 +59,7 @@ const Container = styled.div`
     transition: transform 0.6s;
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transform: ${props => (props.isBackSideShowing ? "rotateY(180deg)" : "none")};
+    transform: ${props => (props.ShowBackSide ? "rotateY(180deg)" : "none")};
   }
 
   .card-front,

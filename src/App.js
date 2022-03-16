@@ -8,14 +8,26 @@ import { imageArray, shuffler } from "./utils";
 function App() {
   const [turnCount, setTurnCount] = useState(0);
   const [imageCollection, setImageCollection] = useState([]);
+  const [selected, setSelected] = useState({
+    last: { url: "", id: "" },
+    current: { url: "", id: "" },
+  });
 
+  // ? optimize
   useEffect(() => {
     shuffler(imageArray, setImageCollection);
   }, []);
 
-  // Start new game
+  // Reset Game
   const handleNewGame = () => {
     setTurnCount(0);
+
+    shuffler(imageArray, setImageCollection);
+
+    setSelected({
+      last: { url: "", id: "" },
+      current: { url: "", id: "" },
+    });
   };
 
   return (
@@ -26,6 +38,8 @@ function App() {
         setTurnCount={setTurnCount}
         handleNewGame={handleNewGame}
         imageCollection={imageCollection}
+        selected={selected}
+        setSelected={setSelected}
       />
     </AppContainer>
   );
