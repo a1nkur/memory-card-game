@@ -5,7 +5,7 @@ const Playground = () => {
   return (
     <Container>
       <div className="row-1">
-        <h1 className="title">Memory Match | Current Count : 0</h1>
+        <h1 className="title">Memory Match | Turn Count : 0</h1>
       </div>
       <div className="row-2">
         <button>New Game</button>
