@@ -1,12 +1,20 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Playground from "./components/playground.component";
 import GlobalStyle from "./GlobalStyles";
 
 function App() {
+  const [turnCount, setTurnCount] = useState(0);
+
+  // Start new game
+  const handleNewGame = () => {
+    setTurnCount(0);
+  };
+
   return (
     <AppContainer>
       <GlobalStyle />
-      <Playground />
+      <Playground turnCount={turnCount} setTurnCount={setTurnCount} handleNewGame={handleNewGame} />
     </AppContainer>
   );
 }

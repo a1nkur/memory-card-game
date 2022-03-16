@@ -1,14 +1,22 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-const Card = () => {
+const Card = ({ setTurnCount, tile }) => {
+  const [showBackSide, setShowBackSide] = useState(false);
+
+  const handleFlip = () => {
+    setShowBackSide(prevState => !prevState);
+    setTurnCount(prevState => prevState + 1);
+  };
+
   return (
-    <Container>
-      <div className="inner">
+    <Container isBackSideShowing={showBackSide}>
+      <div className="inner" onClick={handleFlip}>
         <div className="card-front">
-          <img src="/images/cover.png" alt="front-side" />
+          <img src={tile.frontSideURL} alt="front-side" />
         </div>
         <div className="card-back">
-          <img src="/images/helmet-1.png" alt="back-side" />
+          <img src={tile.backSideURL} alt="back-side" />
         </div>
       </div>
     </Container>
@@ -23,14 +31,7 @@ const Container = styled.div`
   cursor: pointer;
   background-color: transparent;
   perspective: 1000px;
-
-  &:hover {
-    transform: rotateY(180deg);
-
-    .inner {
-      transform: rotateY(180deg);
-    }
-  }
+  transform: ${props => (props.isBackSideShowing ? "rotateY(180deg)" : "none")};
 
   .inner {
     position: relative;
@@ -39,6 +40,7 @@ const Container = styled.div`
     transition: transform 0.6s;
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transform: ${props => (props.isBackSideShowing ? "rotateY(180deg)" : "none")};
   }
 
   .card-front,
