@@ -1,25 +1,10 @@
 import styled from "styled-components";
 import Card from "./card.component";
 
-const CardGrid = ({ setTurnCount }) => {
-  const imageArray = [
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/ring-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/helmet-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/sword-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/potion-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/ring-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/shield-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/helmet-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/scroll-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/potion-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/shield-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/sword-1.png" },
-    { frontSideURL: "/images/cover.png", backSideURL: "/images/scroll-1.png" },
-  ];
-
+const CardGrid = ({ setTurnCount, imageCollection }) => {
   return (
     <Container>
-      {imageArray.map(tile => (
+      {imageCollection.map(tile => (
         <Card setTurnCount={setTurnCount} tile={tile} />
       ))}
     </Container>

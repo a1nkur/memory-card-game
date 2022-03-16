@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CardGrid from "./card-grid.component";
 
-const Playground = ({ turnCount, setTurnCount, handleNewGame }) => {
+const Playground = ({ turnCount, setTurnCount, handleNewGame, imageCollection }) => {
   return (
     <Container>
       <div className="row-1">
@@ -11,7 +11,7 @@ const Playground = ({ turnCount, setTurnCount, handleNewGame }) => {
         <button onClick={handleNewGame}>New Game</button>
       </div>
       <div className="row-3">
-        <CardGrid setTurnCount={setTurnCount} />
+        <CardGrid setTurnCount={setTurnCount} imageCollection={imageCollection} />
       </div>
     </Container>
   );

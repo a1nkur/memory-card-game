@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import Playground from "./components/playground.component";
 import GlobalStyle from "./GlobalStyles";
+import { imageArray, shuffler } from "./utils";
 
 function App() {
   const [turnCount, setTurnCount] = useState(0);
+  const [imageCollection, setImageCollection] = useState([]);
+
+  useEffect(() => {
+    shuffler(imageArray, setImageCollection);
+  }, []);
 
   // Start new game
   const handleNewGame = () => {
@@ -14,7 +21,12 @@ function App() {
   return (
     <AppContainer>
       <GlobalStyle />
-      <Playground turnCount={turnCount} setTurnCount={setTurnCount} handleNewGame={handleNewGame} />
+      <Playground
+        turnCount={turnCount}
+        setTurnCount={setTurnCount}
+        handleNewGame={handleNewGame}
+        imageCollection={imageCollection}
+      />
     </AppContainer>
   );
 }

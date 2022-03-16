@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const Card = ({ setTurnCount, tile }) => {
-  const [showBackSide, setShowBackSide] = useState(false);
+  const [showBackSide, setShowBackSide] = useState(true);
 
   const handleFlip = () => {
     setShowBackSide(prevState => !prevState);
