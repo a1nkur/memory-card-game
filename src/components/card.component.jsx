@@ -1,21 +1,23 @@
 import styled from "styled-components";
 
-const Card = ({ setTurnCount, tile, setSelected, cancelOutThisCard, ShowBackSide }) => {
-  const handleFlip = () => {
-    setTurnCount(prevState => prevState + 1);
+const Card = ({ setTurnCount, tile, setSelected, ShowBackSide, selected }) => {
+  const handleFlip = id => {
+    if (id !== selected.current.id) {
+      setTurnCount(prevState => prevState + 1);
 
-    setSelected(prevState => ({
-      ...prevState,
-      last: prevState.current,
-      current: { url: tile.backSideURL, id: tile.id },
-    }));
+      setSelected(prevState => ({
+        ...prevState,
+        last: prevState.current,
+        current: { url: tile.backSideURL, id: tile.id },
+      }));
+    }
   };
 
   return (
     <>
-      {!cancelOutThisCard && (
-        <Container ShowBackSide={ShowBackSide} showFrontSide={cancelOutThisCard}>
-          <div className="inner" onClick={handleFlip}>
+      {!tile.matched && (
+        <Container ShowBackSide={ShowBackSide}>
+          <div className="inner" onClick={() => handleFlip(tile.id)}>
             <div className="card-front">
               <img src={tile.frontSideURL} alt="front-side" />
             </div>
@@ -26,12 +28,9 @@ const Card = ({ setTurnCount, tile, setSelected, cancelOutThisCard, ShowBackSide
         </Container>
       )}
 
-      {cancelOutThisCard && (
-        <Container>
+      {tile.matched && (
+        <Container cancelCard={tile.matched}>
           <div className="inner">
-            <div className="card-front">
-              <img src={tile.frontSideURL} alt="front-side" />
-            </div>
             <div className="card-back">
               <img src={tile.backSideURL} alt="back-side" />
             </div>
@@ -50,7 +49,7 @@ const Container = styled.div`
   cursor: pointer;
   background-color: transparent;
   perspective: 1000px;
-  transform: ${props => (props.ShowBackSide ? "rotateY(180deg)" : "none")};
+  transform: ${props => (props.ShowBackSide || props.cancelCard ? "rotateY(180deg)" : "none")};
 
   .inner {
     position: relative;
@@ -59,7 +58,7 @@ const Container = styled.div`
     transition: transform 0.6s;
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transform: ${props => (props.ShowBackSide ? "rotateY(180deg)" : "none")};
+    transform: ${props => (props.ShowBackSide || props.cancelCard ? "rotateY(180deg)" : "none")};
   }
 
   .card-front,

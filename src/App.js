@@ -13,10 +13,30 @@ function App() {
     current: { url: "", id: "" },
   });
 
-  // ? optimize
+  const [cancelledCardsId, setCancelledCardsId] = useState([]);
+
   useEffect(() => {
     shuffler(imageArray, setImageCollection);
   }, []);
+
+  useEffect(() => {
+    if (selected.last.url === selected.current.url) {
+      // setCancelledCardsId(prevState => [...prevState, selected.last.id, selected.current.id]);
+
+      setImageCollection(prevState =>
+        prevState.map(item => {
+          if (item.id === selected.last.id || item.id === selected.current.id) {
+            return {
+              ...item,
+              matched: true,
+            };
+          } else {
+            return item;
+          }
+        })
+      );
+    }
+  }, [selected]);
 
   // Reset Game
   const handleNewGame = () => {

@@ -9,14 +9,9 @@ const CardGrid = ({ setTurnCount, imageCollection, setSelected, selected }) => {
           setTurnCount={setTurnCount}
           tile={tile}
           key={tile.id}
+          selected={selected}
           setSelected={setSelected}
           ShowBackSide={selected.current.id === tile.id}
-          cancelOutThisCard={
-            selected.current.url.length > 0 &&
-            selected.last.url.length > 0 &&
-            selected.last.url === selected.current.url &&
-            selected.current.id === tile.id
-          }
         />
       ))}
     </Container>
